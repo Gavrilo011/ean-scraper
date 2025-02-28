@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAN Scraper</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+  <div class="container mt-5 p-5">
+    <header>
+      <div class="row">
+        <div class="col-6">
+          <div class="logo">
+            <svg width="120" height="24" id="Gigatron" viewBox="0 0 120 24" class="fill-gyellow-500 dark:fill-gpurple-400" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.14797 24C3.21635 24 0 20.9067 0 17.1277V7.67748C0 3.89852 3.21635 0.805223 7.14797 0.805223V5.22404C5.86478 5.26837 4.82895 6.29118 4.82895 7.53536V17.4434C4.82895 18.6874 5.86478 19.7103 7.14797 19.7536V24ZM7.75439 14.2362H10.1907V17.4434C10.1907 18.7038 9.12628 19.7374 7.81875 19.7549V24C11.7498 24 14.9668 20.9067 14.9668 17.1277V10.3999H12.5571H10.1907H7.75439V14.2362ZM7.81875 0.805223C11.7193 0.805223 14.9156 3.84972 14.9652 7.58846L10.1907 7.89336V7.53536C10.1907 6.27391 9.12628 5.24022 7.81875 5.22294V0.805223ZM17.1702 1.10235H22.1018V23.627H17.1702V1.10235ZM31.4637 24C27.5319 24 24.3151 20.9067 24.3151 17.1277V7.67748C24.3151 3.89852 27.5319 0.805223 31.4637 0.805223V5.22404C30.1798 5.26837 29.1441 6.29118 29.1441 7.53536V17.4434C29.1441 18.6874 30.1798 19.7103 31.4637 19.7536V24ZM32.069 14.2362H34.5051V17.4434C34.5051 18.7038 33.4409 19.7374 32.1334 19.7549V24C36.065 24 39.2815 20.9067 39.2815 17.1277V10.3999H36.8721H34.5051H32.069V14.2362ZM32.1334 0.805223C36.034 0.805223 39.2301 3.84972 39.2802 7.58846L34.5051 7.89336V7.53536C34.5051 6.27391 33.4409 5.24022 32.1334 5.22294V0.805223ZM43.9847 6.28579L39.8382 23.627H44.77L45.4362 20.8427H50.1119L49.2479 17.0606H46.341L47.6961 11.3935L47.2169 9.39116C46.8938 8.04087 45.958 6.26842 44.2849 6.28369L43.9847 6.28579ZM45.28 1.10235H50.8682L56.2538 23.627H51.3225L47.8826 9.24355C47.4934 7.6167 46.3443 5.608 44.2787 5.62637L45.28 1.10235ZM69.4287 5.47026H54.697V1.10235H69.4287V5.47026ZM59.5966 6.09395H64.5287V23.627H59.5966V6.09395ZM70.9262 1.10235H75.8586V23.627H70.9262V1.10235ZM79.109 1.10235H76.4747V5.52007H78.5913C80.0398 5.52007 81.2255 6.65896 81.2255 8.05275V8.34659C81.2255 9.74038 80.0398 10.8803 78.5913 10.8803H76.4747V15.297H79.109C82.9459 15.297 86.0857 12.2785 86.0857 8.58961V7.80973C86.0857 4.12089 82.9459 1.10235 79.109 1.10235ZM83.1231 14.6897L86.5019 23.627H81.1802L78.2673 15.9207H78.9184C80.4695 15.9207 81.9169 15.4663 83.1231 14.6897ZM94.8013 24C90.8685 24 87.6521 20.9067 87.6521 17.1277V7.67748C87.6521 3.89852 90.8685 0.805223 94.8013 0.805223V5.22404C93.5173 5.26837 92.4807 6.29118 92.4807 7.53536V17.4434C92.4807 18.6874 93.5173 19.7103 94.8013 19.7536V24ZM95.5686 24C99.5002 24 102.718 20.9067 102.718 17.1277V7.67748C102.718 3.89852 99.5002 0.805223 95.5686 0.805223V5.22404C96.8523 5.26837 97.8894 6.29118 97.8894 7.53536V17.4434C97.8894 18.6874 96.8523 19.7103 95.5686 19.7536V24ZM104.93 23.627H109.718V13.3099L107.824 8.46056C107.273 7.0526 106.449 6.37051 104.93 6.20664V23.627ZM104.901 1.10235H110.424L116.094 15.5984C116.734 17.2339 117.463 18.9358 120 19.257V23.627H114.478L108.462 8.22951C107.748 6.39857 106.568 5.69583 104.897 5.54283L104.901 1.10235ZM115.212 1.10235H120V18.5932C117.986 18.3048 117.382 17.0258 116.734 15.3674L115.212 11.4768V1.10235Z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="row py-5">
+        <div class="col-12">
+          <div class="headline mb-4">
+            <h1>EAN Scraper</h1>
+          </div>
+
+          <div class="description mb-4">
+            <p>EAN Scraper je kreiran tako da hvata EAN kodove sa GIGATRON-ovog novog sajta.</p>
+            <p>Idite na neku kategoriju, ili potkategoriju, označite grupe proizvoda, filtere... zatim kopirajte URL sa Gigatron sajta i unesite u polje predviđeno za to.</p>
+            <p>Ukoliko imate bilo kakvih pitanja ili nedoumica, slobodno mi se obratite na email 😎 <a href="mailto:dusan.banjanin@gigatronshop.com">dusan.banjanin@gigatronshop.com</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forma za unos URL-a -->
+      <div class="row">
+        <div class="col-12">
+          <form id="scrapeForm" action="/scrape" method="POST" class="mb-4">
+            <div class="form-group">
+              <label for="urlInput">Unesite URL stranice:</label>
+              <input type="url" id="urlInput" name="url" class="form-control" placeholder="Unesite URL" required>
+              <button type="submit" class="btn btn-primary mt-4">Scrape</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+</body>
+</html>
