@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Form submitted!");
 
     const url = document.getElementById("urlInput").value;
+    console.log("URL entered:", url); // Dodato za debagovanje
 
     try {
       console.log("Sending fetch request...");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: `url=${encodeURIComponent(url)}`,
       });
 
-      console.log("Response received:", response);
+      console.log("Response received:", response); // Dodato za debagovanje
       if (response.ok) {
         // Redirekcija na stranicu sa rezultatima
         window.location.href = "/results";

@@ -44,15 +44,23 @@ const scrapePage = async (url) => {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
+    console.log("HTML content loaded successfully."); // Dodato za debagovanje
+
     const eanCodes = new Set();
-    $("section.grid a[href]").each((index, element) => {
-      const href = $(element).attr("href");
-      const ean = href.split("-").pop();
-      if (ean) {
+
+    // Pronalaženje svih linkova koji sadrže "/proizvod/" u href atributu
+    $('a[href*="/proizvod/"]').each((index, element) => {
+      const href = $(element).attr('href');
+      console.log(`Found href: ${href}`); // Dodato za debagovanje
+
+      // Izvuci EAN iz href-a
+      const ean = href.split('-').pop(); // Izvuci poslednji deo linka nakon poslednjeg '-'
+      if (ean && !isNaN(ean)) { // Proveri da li je EAN broj
         eanCodes.add(ean);
       }
     });
 
+    console.log(`Found ${eanCodes.size} EAN codes on ${url}`); // Dodato za debagovanje
     return Array.from(eanCodes);
   } catch (error) {
     console.error(`Error scraping ${url}:`, error);
@@ -66,8 +74,19 @@ const getPaginationLinks = async (url) => {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
+    console.log("Looking for pagination links...");
+
     const paginationLinks = [];
-    const buttons = $(".mx-auto.mt-16.flex.w-fit.gap-2.col-span-full button");
+    const paginationContainer = $(".mx-auto.mt-16.flex.w-fit.gap-2.col-span-full");
+
+    // Provera da li postoji paginacija
+    if (paginationContainer.length === 0) {
+      console.log("No pagination found. Only scraping the current page.");
+      return [url]; // Vraćamo samo trenutni URL
+    }
+
+    // Ako postoji paginacija, pronađi sve linkove
+    const buttons = paginationContainer.find("button");
 
     buttons.each((index, element) => {
       if ($(element).attr("aria-label") === "Sledeća strana" && !$(element).attr("disabled")) {
@@ -75,18 +94,22 @@ const getPaginationLinks = async (url) => {
         if (href) {
           const fullUrl = new URL(href, url).toString();
           paginationLinks.push(fullUrl);
+          console.log(`Found pagination link: ${fullUrl}`);
         }
       }
       if ($(element).text().match(/\d+/)) {
         const pageNum = $(element).text();
-        paginationLinks.push(`${url}&page=${pageNum}`);
+        const separator = url.includes('?') ? '&' : '?';
+        const pageUrl = `${url}${separator}page=${pageNum}`;
+        paginationLinks.push(pageUrl);
+        console.log(`Found pagination link: ${pageUrl}`);
       }
     });
 
     return [...new Set(paginationLinks)];
   } catch (error) {
     console.error(`Error fetching pagination links from ${url}:`, error);
-    return [];
+    return [url]; // Vraćamo trenutni URL ako dođe do greške
   }
 };
 
