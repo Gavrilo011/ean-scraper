@@ -44,23 +44,20 @@ const scrapePage = async (url) => {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
-    console.log("HTML content loaded successfully."); // Dodato za debagovanje
+    console.log("HTML content loaded successfully.");
 
     const eanCodes = new Set();
 
     // Pronalaženje svih linkova koji sadrže "/proizvod/" u href atributu
     $('a[href*="/proizvod/"]').each((index, element) => {
       const href = $(element).attr('href');
-      console.log(`Found href: ${href}`); // Dodato za debagovanje
-
-      // Izvuci EAN iz href-a
       const ean = href.split('-').pop(); // Izvuci poslednji deo linka nakon poslednjeg '-'
-      if (ean && !isNaN(ean)) { // Proveri da li je EAN broj
+      if (ean && /^\d+$/.test(ean)) { // Proveri da li je EAN broj
         eanCodes.add(ean);
       }
     });
 
-    console.log(`Found ${eanCodes.size} EAN codes on ${url}`); // Dodato za debagovanje
+    console.log(`Found ${eanCodes.size} EAN codes on ${url}`);
     return Array.from(eanCodes);
   } catch (error) {
     console.error(`Error scraping ${url}:`, error);
@@ -79,34 +76,46 @@ const getPaginationLinks = async (url) => {
     const paginationLinks = [];
     const paginationContainer = $(".mx-auto.mt-16.flex.w-fit.gap-2.col-span-full");
 
+    // Dodajemo debag iskaze za paginationContainer
+    console.log("Pagination container HTML:", paginationContainer.html());
+
     // Provera da li postoji paginacija
     if (paginationContainer.length === 0) {
       console.log("No pagination found. Only scraping the current page.");
       return [url]; // Vraćamo samo trenutni URL
     }
 
-    // Ako postoji paginacija, pronađi sve linkove
+    // Pronalaženje svih dugmadi u paginaciji
     const buttons = paginationContainer.find("button");
 
+    // Filtriranje dugmadi koja sadrže brojeve
+    const pageNumbers = [];
     buttons.each((index, element) => {
-      if ($(element).attr("aria-label") === "Sledeća strana" && !$(element).attr("disabled")) {
-        const href = $(element).attr("href");
-        if (href) {
-          const fullUrl = new URL(href, url).toString();
-          paginationLinks.push(fullUrl);
-          console.log(`Found pagination link: ${fullUrl}`);
-        }
-      }
-      if ($(element).text().match(/\d+/)) {
-        const pageNum = $(element).text();
-        const separator = url.includes('?') ? '&' : '?';
-        const pageUrl = `${url}${separator}page=${pageNum}`;
-        paginationLinks.push(pageUrl);
-        console.log(`Found pagination link: ${pageUrl}`);
+      const buttonText = $(element).text().trim();
+      const pageNumber = parseInt(buttonText, 10);
+      if (!isNaN(pageNumber)) {
+        pageNumbers.push(pageNumber);
       }
     });
 
-    return [...new Set(paginationLinks)];
+    // Pronalaženje najvećeg broja (poslednje stranice)
+    const lastPageNumber = Math.max(...pageNumbers);
+
+    // Provera da li je lastPageNumber validan broj
+    if (isNaN(lastPageNumber)) {
+      console.log("Could not determine the last page number. Only scraping the current page.");
+      return [url];
+    }
+
+    // Generisanje linkova za sve stranice
+    for (let i = 1; i <= lastPageNumber; i++) {
+      const separator = url.includes('?') ? '&' : '?';
+      const pageUrl = `${url}${separator}page=${i}`;
+      paginationLinks.push(pageUrl);
+      console.log(`Generated pagination link: ${pageUrl}`);
+    }
+
+    return paginationLinks;
   } catch (error) {
     console.error(`Error fetching pagination links from ${url}:`, error);
     return [url]; // Vraćamo trenutni URL ako dođe do greške
