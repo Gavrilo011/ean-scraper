@@ -174,7 +174,8 @@ app.post("/clear-session", (req, res) => {
 app.get("/results", (req, res) => {
   // Dobijamo EAN kodove iz session-a
   const eanCodes = req.session.eanCodes || [];
-  res.render("results", { eanCodes: eanCodes });
+  const eanCount = eanCodes.length; // Broj EAN kodova
+  res.render("results", { eanCodes: eanCodes, eanCount: eanCount });
 });
 
 // Start the server

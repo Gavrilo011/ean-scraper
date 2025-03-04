@@ -47,6 +47,12 @@ header .logo svg {
 }
 
 
+/* ---------------------------- Kolicina pronadjenih ean kodova ---------------------------- */
+.description strong {
+  color: #3c74fe; /* Boja za broj EAN kodova */
+  font-size: 1.2em; /* Veća veličina teksta */
+}
+
 
 /* ---------------------------- Copy text button ---------------------------- */
 .result-container {
