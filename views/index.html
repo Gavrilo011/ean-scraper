@@ -27,12 +27,12 @@
       <div class="row py-5">
         <div class="col-12">
           <div class="headline mb-4">
-            <h1>EAN Scraper</h1>
+            <h1>EAN Viewer</h1>
           </div>
 
           <div class="description mb-4">
-            <p>EAN Scraper je kreiran tako da hvata EAN kodove sa GIGATRON-ovog novog sajta.</p>
-            <p>Idite na neku kategoriju, ili potkategoriju, označite grupe proizvoda, filtere... zatim kopirajte URL sa Gigatron sajta i unesite u polje predviđeno za to.</p>
+            <p>EAN Viewer je kreiran tako da pronalazi EAN kodove sa <strong>GIGATRON</strong> sajta.</p>
+            <p>Odaberite kategoriju ili potkategoriju proizvoda, filtrirajte prema željenim grupama i opcijama. Takođe, možete koristiti ključnu reč za pretragu specifičnih proizvoda. Nakon što pronađete ono što vam treba, jednostavno kopirajte URL sa Gigatron sajta i unesite ga u predviđeno polje.</p>
             <p>Ukoliko imate bilo kakvih pitanja ili nedoumica, slobodno mi se obratite na email 😎 <a href="mailto:dusan.banjanin@gigatronshop.com">dusan.banjanin@gigatronshop.com</a>.</p>
           </div>
         </div>
@@ -43,9 +43,9 @@
         <div class="col-12">
           <form id="scrapeForm" action="/scrape" method="POST" class="mb-4">
             <div class="form-group">
-              <label for="urlInput">Unesite URL stranice:</label>
+              <label for="urlInput">U polje ispod unesite URL stranice:</label>
               <input type="url" id="urlInput" name="url" class="form-control" placeholder="Unesite URL" required>
-              <button type="submit" class="btn btn-primary mt-4">Scrape</button>
+              <button type="submit" class="btn btn-primary mt-4">Pronadji EAN kodove</button>
             </div>
           </form>
         </div>
