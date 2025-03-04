@@ -6,13 +6,32 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Particles.js je učitan!");
   });
 
-  // Ostali JavaScript kod (npr. za slanje forme)
+  // Funkcija za prikazivanje preloader-a
+  function showPreloader() {
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+      preloader.style.display = "flex";
+    }
+  }
+
+  // Funkcija za sakrivanje preloader-a
+  function hidePreloader() {
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+      preloader.style.display = "none";
+    }
+  }
+
+  // Slanje forme
   document.getElementById("scrapeForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Form submitted!");
 
     const url = document.getElementById("urlInput").value;
-    console.log("URL entered:", url); // Dodato za debagovanje
+    console.log("URL entered:", url);
+
+    // Prikazivanje preloader-a
+    showPreloader();
 
     try {
       console.log("Sending fetch request...");
@@ -24,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: `url=${encodeURIComponent(url)}`,
       });
 
-      console.log("Response received:", response); // Dodato za debagovanje
+      console.log("Response received:", response);
       if (response.ok) {
         // Redirekcija na stranicu sa rezultatima
         window.location.href = "/results";
@@ -33,6 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      // Sakrivanje preloader-a
+      hidePreloader();
     }
   });
 });
