@@ -27,6 +27,7 @@ body {
   border-radius: 10px;
   padding: 20px;
   margin-top: 50px;
+  box-shadow: 0 5px 20px -6px #333;
 }
 
 header .logo svg {
@@ -55,12 +56,20 @@ header .logo svg {
 }
 
 
+/* ---------------------------- Input polje za url formu ---------------------------- */
+.form-control {
+  box-shadow: 0 5px 10px -8px rgb(51 51 51 / 60%);
+}
+
+
+
 /* ---------------------------- Copy text button ---------------------------- */
 .result-container {
   background-color: #000000; /* Crna pozadina */
   color: #ffffff; /* Bela boja teksta */
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 0 7px 7px -3px rgb(51 51 51 / 60%);
   /* margin-top: 20px; */
   /* margin-bottom: 20px; */
   /* padding: 15px; */
