@@ -74,7 +74,7 @@ const getPaginationLinks = async (url) => {
     console.log("Looking for pagination links...");
 
     const paginationLinks = [];
-    const paginationContainer = $(".mx-auto.mt-16.flex.w-fit.gap-2.col-span-full");
+    const paginationContainer = $(".flex.w-fit.gap-2");
 
     // Dodajemo debag iskaze za paginationContainer
     console.log("Pagination container HTML:", paginationContainer.html());
@@ -85,21 +85,20 @@ const getPaginationLinks = async (url) => {
       return [url]; // Vraćamo samo trenutni URL
     }
 
-    // Pronalaženje svih dugmadi u paginaciji
-    const buttons = paginationContainer.find("button");
-
-    // Filtriranje dugmadi koja sadrže brojeve
     const pageNumbers = [];
-    buttons.each((index, element) => {
-      const buttonText = $(element).text().trim();
-      const pageNumber = parseInt(buttonText, 10);
+
+    $("button[aria-label*='Strana']").each((index, element) => {
+      const pageNumber = parseInt($(element).text().trim(), 10);
+
       if (!isNaN(pageNumber)) {
         pageNumbers.push(pageNumber);
       }
     });
 
-    // Pronalaženje najvećeg broja (poslednje stranice)
     const lastPageNumber = Math.max(...pageNumbers);
+
+    console.log("Pages found:", pageNumbers);
+    console.log("Last page:", lastPageNumber);
 
     // Provera da li je lastPageNumber validan broj
     if (isNaN(lastPageNumber)) {

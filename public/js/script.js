@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Inicijalizacija particles.js
   particlesJS.load("particles-js", "/js/particles-config.json", function () {
-    console.log("Particles.js je učitan!");
+    // console.log("Particles.js je učitan!");
+    console.log("Prvi put kad radiš nešto, uradi to brzo. Drugi put — uradi to bolje.");
   });
 
   // Funkcija za prikazivanje preloader-a
@@ -23,38 +24,42 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Slanje forme
-  document.getElementById("scrapeForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    console.log("Form submitted!");
+  const scrapeForm = document.getElementById("scrapeForm");
 
-    const url = document.getElementById("urlInput").value;
-    console.log("URL entered:", url);
+  if (scrapeForm) {
+    scrapeForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      console.log("Form submitted!");
 
-    // Prikazivanje preloader-a
-    showPreloader();
+      const url = document.getElementById("urlInput").value;
+      console.log("URL entered:", url);
 
-    try {
-      console.log("Sending fetch request...");
-      const response = await fetch("/scrape", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `url=${encodeURIComponent(url)}`,
-      });
+      // Prikazivanje preloader-a
+      showPreloader();
 
-      console.log("Response received:", response);
-      if (response.ok) {
-        // Redirekcija na stranicu sa rezultatima
-        window.location.href = "/results";
-      } else {
-        console.log("Došlo je do greške pri skrejpovanju.");
+      try {
+        console.log("Sending fetch request...");
+        const response = await fetch("/scrape", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `url=${encodeURIComponent(url)}`,
+        });
+
+        console.log("Response received:", response);
+        if (response.ok) {
+          // Redirekcija na stranicu sa rezultatima
+          window.location.href = "/results";
+        } else {
+          console.log("Došlo je do greške pri skrejpovanju.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        // Sakrivanje preloader-a
+        hidePreloader();
       }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      // Sakrivanje preloader-a
-      hidePreloader();
-    }
-  });
+    });
+  }
 });
